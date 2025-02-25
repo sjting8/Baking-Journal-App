@@ -12,6 +12,6 @@ Uses ReactJS, Django, postgreSQL, and Typescript.
 - [x] Delete Journal Functionality
 - [x] Recipe Ratings
 - [x] Edit Journal Functionality
-- [] Recipe Tags
-- [] Filter Recipe by Tags
-- [] Machine Learning Ingredient to Recipe Suggestor
+- [ ] Recipe Tags
+- [ ] Filter Recipe by Tags
+- [ ] Machine Learning Ingredient to Recipe Suggestor
