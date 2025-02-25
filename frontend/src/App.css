@@ -1,0 +1,161 @@
+:root {
+  --dark-bg: #121212;
+  --dark-paper: #1e1e1e;
+  --dark-hover: #2e2e2e;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --primary-color: #90caf9;
+  --error-color: #f44336;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--dark-bg) !important;
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+.MuiContainer-root {
+  background-color: var(--dark-bg) !important;
+  min-height: 100vh;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.MuiPaper-root {
+  background-color: var(--dark-paper) !important;
+  color: var(--text-primary) !important;
+  background-image: none !important;
+}
+
+.MuiTextField-root {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.MuiInputBase-root {
+  color: var(--text-primary) !important;
+}
+
+.MuiInputLabel-root {
+  color: var(--text-secondary) !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.23) !important;
+}
+
+.MuiButton-contained {
+  background-color: var(--primary-color) !important;
+  color: var(--dark-bg) !important;
+}
+
+.MuiButton-outlined {
+  color: var(--primary-color) !important;
+  border-color: rgba(144, 202, 249, 0.5) !important;
+}
+
+.MuiIconButton-root {
+  color: var(--text-secondary) !important;
+}
+
+.MuiIconButton-root:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.MuiIconButton-colorError {
+  color: var(--error-color) !important;
+}
+
+.MuiTypography-root {
+  color: var(--text-primary) !important;
+}
+
+.MuiTypography-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.MuiListItem-root {
+  background-color: var(--dark-paper);
+  margin-bottom: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.MuiListItem-root:hover {
+  background-color: var(--dark-hover) !important;
+}
+
+.MuiRating-iconFilled {
+  color: #faaf00 !important;
+}
+
+.MuiRating-iconEmpty {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.MuiDialog-paper {
+  background-color: var(--dark-paper) !important;
+  color: var(--text-primary) !important;
+}
+
+.recipe-card {
+  background-color: var(--dark-paper);
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.recipe-card:hover {
+  background-color: var(--dark-hover);
+}
+
+.header-container {
+  background-color: rgba(30, 30, 30, 0.6);
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.content-section {
+  background-color: rgba(30, 30, 30, 0.6);
+  padding: 24px;
+  border-radius: 4px;
+  margin-top: 24px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3e3e3e;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4e4e4e;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--dark-paper) inset !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
