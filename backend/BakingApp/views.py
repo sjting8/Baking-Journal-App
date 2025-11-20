@@ -43,7 +43,8 @@ class JournalEntryViewSet(viewsets.ModelViewSet):
         
             serializer = self.get_serializer(data={
                 'content': request.data.get('content'),
-                'journal': journal.id
+                'journal': journal.id,
+                'rating': request.data.get('rating')
             })
             
             if serializer.is_valid():

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { JournalListHelper } from '../Helpers/JournalListHelper';
-import { 
-    Container, 
-    Typography, 
+import {
+    Container,
+    Typography,
     Button,
     TextField,
     Box,
@@ -72,7 +72,7 @@ export const JournalList: React.FC = () => {
         const content = entry.content;
         const ingredientsPart = content.split('Description:')[0].replace('Ingredients:', '').trim();
         const descriptionPart = content.split('Description:')[1]?.trim() || '';
-    
+
         if (isEditing) {
             return (
                 <Paper elevation={2} sx={{ p: 2, mb: 2 }}>
@@ -92,7 +92,7 @@ export const JournalList: React.FC = () => {
                             ({editRating}/10)
                         </Typography>
                     </Box>
-    
+
                     <TextField
                         fullWidth
                         label="Ingredients"
@@ -100,7 +100,7 @@ export const JournalList: React.FC = () => {
                         onChange={(e) => setEditIngredients(e.target.value)}
                         multiline
                         rows={4}
-                        sx={{ 
+                        sx={{
                             mb: 2,
                             '& .MuiInputBase-input': {
                                 color: 'text.primary',
@@ -114,7 +114,7 @@ export const JournalList: React.FC = () => {
                         onChange={(e) => setEditDescription(e.target.value)}
                         multiline
                         rows={4}
-                        sx={{ 
+                        sx={{
                             mb: 2,
                             '& .MuiInputBase-input': {
                                 color: 'text.primary',
@@ -125,7 +125,7 @@ export const JournalList: React.FC = () => {
                         <Button onClick={() => setEditingEntry(null)}>
                             Cancel
                         </Button>
-                        <Button 
+                        <Button
                             onClick={handleSaveEdit}
                             variant="contained"
                             disabled={loading}
@@ -136,7 +136,7 @@ export const JournalList: React.FC = () => {
                 </Paper>
             );
         }
-    
+
         return (
             <Paper elevation={2} sx={{ p: 2, mb: 2 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -155,13 +155,13 @@ export const JournalList: React.FC = () => {
                                 ({entry.rating}/10)
                             </Typography>
                         </Box>
-    
+
                         <Typography variant="h6" gutterBottom color="primary">
                             Ingredients:
                         </Typography>
-                        <Typography 
-                            component="pre" 
-                            sx={{ 
+                        <Typography
+                            component="pre"
+                            sx={{
                                 whiteSpace: 'pre-wrap',
                                 mb: 2,
                                 fontFamily: 'inherit',
@@ -170,13 +170,13 @@ export const JournalList: React.FC = () => {
                         >
                             {ingredientsPart}
                         </Typography>
-                        
+
                         <Typography variant="h6" gutterBottom color="primary">
                             Description:
                         </Typography>
-                        <Typography 
-                            component="pre" 
-                            sx={{ 
+                        <Typography
+                            component="pre"
+                            sx={{
                                 whiteSpace: 'pre-wrap',
                                 fontFamily: 'inherit',
                                 color: 'text.primary'
@@ -186,13 +186,13 @@ export const JournalList: React.FC = () => {
                         </Typography>
                     </Box>
                     <Box>
-                        <IconButton 
+                        <IconButton
                             onClick={() => handleStartEdit(entry)}
                             sx={{ mr: 1 }}
                         >
                             <EditIcon />
                         </IconButton>
-                        <IconButton 
+                        <IconButton
                             onClick={() => {
                                 setDeleteEntryId(entry.id);
                                 setDeleteDialogOpen(true);
@@ -203,11 +203,11 @@ export const JournalList: React.FC = () => {
                         </IconButton>
                     </Box>
                 </Box>
-                
-                <Typography 
-                    variant="caption" 
-                    sx={{ 
-                        display: 'block', 
+
+                <Typography
+                    variant="caption"
+                    sx={{
+                        display: 'block',
                         mt: 2,
                         color: 'text.secondary'
                     }}
@@ -221,8 +221,8 @@ export const JournalList: React.FC = () => {
     return (
         <Container maxWidth="md">
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <IconButton 
-                    component={Link} 
+                <IconButton
+                    component={Link}
                     to="/"
                     sx={{ mr: 2 }}
                     aria-label="Back to home"
@@ -233,7 +233,7 @@ export const JournalList: React.FC = () => {
             <Typography variant="h4" component="h1" gutterBottom className="header-container">
                 {isNewJournal ? 'Create New Recipe' : journal?.title || 'Loading...'}
                 {!isNewJournal && (
-                    <IconButton 
+                    <IconButton
                         onClick={() => setDeleteJournalDialogOpen(true)}
                         color="error"
                         aria-label="Delete recipe"
@@ -253,6 +253,7 @@ export const JournalList: React.FC = () => {
                 {isNewJournal ? (
                     <TextField
                         fullWidth
+                        required
                         label="Recipe Title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
@@ -300,9 +301,9 @@ export const JournalList: React.FC = () => {
                         />
                     </>
                 )}
-                <Button 
-                    type="submit" 
-                    variant="contained" 
+                <Button
+                    type="submit"
+                    variant="contained"
                     sx={{ mt: 2 }}
                     disabled={loading}
                 >
@@ -338,7 +339,7 @@ export const JournalList: React.FC = () => {
                     Are you sure you want to delete this recipe version?
                 </DialogContent>
                 <DialogActions>
-                    <Button 
+                    <Button
                         onClick={() => {
                             setDeleteDialogOpen(false);
                             setDeleteEntryId(null);
@@ -346,8 +347,8 @@ export const JournalList: React.FC = () => {
                     >
                         Cancel
                     </Button>
-                    <Button 
-                        onClick={() => deleteEntryId && handleDeleteEntry(deleteEntryId)} 
+                    <Button
+                        onClick={() => deleteEntryId && handleDeleteEntry(deleteEntryId)}
                         color="error"
                         variant="contained"
                     >
@@ -364,13 +365,13 @@ export const JournalList: React.FC = () => {
                     Are you sure you want to delete this entire recipe? This action cannot be undone.
                 </DialogContent>
                 <DialogActions>
-                    <Button 
+                    <Button
                         onClick={() => setDeleteJournalDialogOpen(false)}
                     >
                         Cancel
                     </Button>
-                    <Button 
-                        onClick={handleDeleteJournal} 
+                    <Button
+                        onClick={handleDeleteJournal}
                         color="error"
                         variant="contained"
                     >
