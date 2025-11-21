@@ -21,6 +21,9 @@ export const JournalListHelper = (id?: string) => {
     const [deleteJournalDialogOpen, setDeleteJournalDialogOpen] = useState(false);
     const [deleteEntryId, setDeleteEntryId] = useState<number | null>(null);
 
+    const [tags, setTags] = useState<string[]>([]);
+    const [availableTags, setAvailableTags] = useState<string[]>(['Gluten Free', 'Mixer', 'Healthy', 'Nuts']);
+
     const isNewJournal = !id || id === 'new';
 
     const loadJournal = async () => {
@@ -28,6 +31,9 @@ export const JournalListHelper = (id?: string) => {
         try {
             const data = await journalApi.getJournal(id);
             setJournal(data);
+            if (data.tags) {
+                setTags(data.tags.map(t => t.name));
+            }
             if (data.entries) {
                 setEntries(data.entries);
             }
@@ -39,33 +45,40 @@ export const JournalListHelper = (id?: string) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         try {
             setLoading(true);
             setError(null);
-            
+
             if (isNewJournal) {
                 if (!title.trim()) {
                     setError('Recipe title cannot be empty');
                     return;
                 }
-                const newJournal = await journalApi.createJournal({ title });
+                const newJournal = await journalApi.createJournal({
+                    title,
+                    tags: tags.map(name => ({ name }))
+                });
                 navigate(`/journal/${newJournal.id}`);
             } else if (id) {
-                if (!ingredients.trim() || !description.trim()) {
-                    setError('Both ingredients and description are required');
-                    return;
+                if (ingredients.trim() && description.trim()) {
+                    const content = `Ingredients:\n${ingredients}\n\nDescription:\n${description}`;
+                    const entryData: CreateEntryData = {
+                        content,
+                        rating
+                    };
+                    const newEntry = await journalApi.createEntry(id, entryData);
+                    setEntries(prevEntries => [newEntry, ...prevEntries]);
+                    setIngredients('');
+                    setDescription('');
+                    setRating(5);
                 }
-                const content = `Ingredients:\n${ingredients}\n\nDescription:\n${description}`;
-                const entryData: CreateEntryData = {
-                    content,
-                    rating
-                };
-                const newEntry = await journalApi.createEntry(id, entryData);
-                setEntries(prevEntries => [newEntry, ...prevEntries]);
-                setIngredients('');
-                setDescription('');
-                setRating(5);
+
+                if (journal) {
+                    await journalApi.updateJournal(id, {
+                        tags: tags.map(name => ({ name }))
+                    });
+                }
             }
         } catch (error: any) {
             console.error('Error:', error);
@@ -79,7 +92,7 @@ export const JournalListHelper = (id?: string) => {
         const content = entry.content;
         const ingredientsPart = content.split('Description:')[0].replace('Ingredients:', '').trim();
         const descriptionPart = content.split('Description:')[1]?.trim() || '';
-        
+
         setEditingEntry(entry);
         setEditIngredients(ingredientsPart);
         setEditDescription(descriptionPart);
@@ -88,21 +101,21 @@ export const JournalListHelper = (id?: string) => {
 
     const handleSaveEdit = async () => {
         if (!editingEntry || !id) return;
-        
+
         try {
             setLoading(true);
             setError(null);
-            
+
             const content = `Ingredients:\n${editIngredients}\n\nDescription:\n${editDescription}`;
             const updatedEntry = await journalApi.updateEntry(id, editingEntry.id, {
                 content,
                 rating: editRating
             });
-            
-            setEntries(entries.map(entry => 
+
+            setEntries(entries.map(entry =>
                 entry.id === editingEntry.id ? updatedEntry : entry
             ));
-            
+
             setEditingEntry(null);
             setEditIngredients('');
             setEditDescription('');
@@ -181,5 +194,8 @@ export const JournalListHelper = (id?: string) => {
         handleSaveEdit,
         handleDeleteJournal,
         handleDeleteEntry,
+        tags,
+        setTags,
+        availableTags,
     };
 };

@@ -14,6 +14,7 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
+    Chip,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { JournalEntry } from '../types/journal';
@@ -59,6 +60,9 @@ export const JournalList: React.FC = () => {
         handleSaveEdit,
         handleDeleteJournal,
         handleDeleteEntry,
+        tags,
+        setTags,
+        availableTags,
     } = JournalListHelper(id);
 
     useEffect(() => {
@@ -251,17 +255,62 @@ export const JournalList: React.FC = () => {
 
             <Box component="form" onSubmit={handleSubmit} sx={{ mb: 4 }} className="content-section">
                 {isNewJournal ? (
-                    <TextField
-                        fullWidth
-                        required
-                        label="Recipe Title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        margin="normal"
-                        disabled={loading}
-                    />
+                    <>
+                        <TextField
+                            fullWidth
+                            required
+                            label="Recipe Title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            margin="normal"
+                            disabled={loading}
+                        />
+                        <Box sx={{ mt: 2 }}>
+                            <Typography variant="subtitle1" gutterBottom>Tags:</Typography>
+                            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                                {availableTags.map(tag => (
+                                    <Chip
+                                        key={tag}
+                                        label={tag}
+                                        onClick={() => {
+                                            if (tags.includes(tag)) {
+                                                setTags(tags.filter(t => t !== tag));
+                                            } else {
+                                                setTags([...tags, tag]);
+                                            }
+                                        }}
+                                        color={tags.includes(tag) ? "primary" : "default"}
+                                        variant={tags.includes(tag) ? "filled" : "outlined"}
+                                        clickable
+                                    />
+                                ))}
+                            </Box>
+                        </Box>
+                    </>
                 ) : (
                     <>
+                        <Box sx={{ mb: 3 }}>
+                            <Typography variant="subtitle1" gutterBottom>Tags:</Typography>
+                            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                                {availableTags.map(tag => (
+                                    <Chip
+                                        key={tag}
+                                        label={tag}
+                                        onClick={() => {
+                                            if (tags.includes(tag)) {
+                                                setTags(tags.filter(t => t !== tag));
+                                            } else {
+                                                setTags([...tags, tag]);
+                                            }
+                                        }}
+                                        color={tags.includes(tag) ? "primary" : "default"}
+                                        variant={tags.includes(tag) ? "filled" : "outlined"}
+                                        clickable
+                                    />
+                                ))}
+                            </Box>
+                        </Box>
+
                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                             <Typography variant="h6" sx={{ mr: 2 }}>Rating:</Typography>
                             <StyledRating
@@ -307,7 +356,7 @@ export const JournalList: React.FC = () => {
                     sx={{ mt: 2 }}
                     disabled={loading}
                 >
-                    {loading ? 'Saving...' : (isNewJournal ? 'Create Recipe' : 'Add Recipe Details')}
+                    {loading ? 'Saving...' : (isNewJournal ? 'Create Recipe' : 'Save Details')}
                 </Button>
             </Box>
 
