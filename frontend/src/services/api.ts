@@ -24,8 +24,15 @@ export const journalApi = {
         return response.data;
     },
 
-    createJournal: async (data: { title: string }): Promise<Journal> => {
+    createJournal: async (data: { title: string; tags?: { name: string }[] }): Promise<Journal> => {
         const response = await axios.post(`${API_URL}/journals/`, data, {
+            withCredentials: true
+        });
+        return response.data;
+    },
+
+    updateJournal: async (id: string, data: { title?: string; tags?: { name: string }[] }): Promise<Journal> => {
+        const response = await axios.put(`${API_URL}/journals/${id}/`, data, {
             withCredentials: true
         });
         return response.data;
@@ -41,7 +48,7 @@ export const journalApi = {
     createEntry: async (journalId: string, data: { content: string }): Promise<JournalEntry> => {
         console.log('Creating entry with:', { journalId, data });
         const response = await axios.post(
-            `${API_URL}/journals/${journalId}/entries/`, 
+            `${API_URL}/journals/${journalId}/entries/`,
             data,
             {
                 withCredentials: true,

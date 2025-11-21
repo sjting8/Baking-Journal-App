@@ -7,9 +7,15 @@ export interface JournalEntry {
     updated_at: string;
 }
 
+export interface Tag {
+    id: number;
+    name: string;
+}
+
 export interface Journal {
     id: number;
     title: string;
+    tags: Tag[];
     created_at: string;
     updated_at: string;
     entries: JournalEntry[];
